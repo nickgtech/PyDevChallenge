@@ -2,7 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 
 {% block title %}
-Register
+Search
 {% endblock %}
 
 {% block styles %}
@@ -12,7 +12,6 @@ Register
 {% endblock %}
 
 {% block content %}
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -22,21 +21,25 @@ Register
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Ggiphy</a>
+          <a class="navbar-brand" href="{{ url_for('home', user=current_user.get_id()) }}">Ggiphy</a>
         </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+               <li><a href="{{ url_for('home', user=current_user.get_id()) }}">Home</a></li>
+               <li class="active"><a href="#">Search</a></li>
+               <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
       </div>
     </nav>
-
     <div class="container-fluid">
-              <form method="POST" class="forms" action="{{ url_for('register') }}">
-                    <h1> Sign Up </h1>
-                    {{ wtf.form_field(form.username) }}
-                    {{ wtf.form_field(form.password) }}
-                    {{ wtf.form_field(form.pass_match) }}
-                    {{ form.recaptcha }}
-                    <div class="form-spacing text-center">
-                       <button class="btn btn-lg btn-primary form-button" type="submit" >Submit</button>
-                    </div>
+        <h1 class="text-center"> Search </h1>
+              <form class="search-form" method="POST">
+                    {{ form.csrf_token }}
+                    {{ wtf.form_field(form.search) }}
+                  <div class="col-lg-offset-5">
+                      <button class="btn btn-lg btn-primary " type="submit">Search</button>
+                  </div>
               </form>
     </div>
 

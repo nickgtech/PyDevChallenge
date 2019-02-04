@@ -1,0 +1,73 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}
+Demo App
+{% endblock %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='template.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='forms.css')}}">
+<script src="{{url_for('.static', filename='app.js')}}"></script>
+{% endblock %}
+
+{% block content %}
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('home', user=current_user.get_id()) }}">Ggiphy</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+               <li class="active"><a href="#">Home</a></li>
+               <li><a href="{{ url_for('search') }}">Search</a></li>
+               <li><a href="{{ url_for('logout') }}">Logout</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+
+      <div class="starter-template">
+        <h1>Welcome {{ user }}</h1>
+          <form method="POST" class="search-form" action="{{ url_for('home', user=current_user.get_id()) }}">
+              {{ form.csrf_token }}
+              {{ wtf.form_field(form.category) }}
+            <button class="btn btn-md btn-primary " type="submit"> Apply </button>
+          </form>
+            <div class="container-fluid">
+            {% for gif_row in gifs | batch(6, '&nbsp;') %}
+            <div class="row">
+                {% for gif in gif_row %}
+                {% if gif != '&nbsp;' %}
+               <div class="col-md-2 col-xs-6">
+                    <figure style="padding-top: 50px">
+                        <img src="{{ gif.gif_url }}" />
+                        <figcaption>
+                            Category
+                            <br>
+                            {{ gif.category }}
+                        </figcaption>
+                    </figure>
+                    <div class="text-center">
+                        <a class="btn btn-md btn-primary" href= "{{ url_for('delete', id=gif.id) }}"> Delete </a>
+                    </div>
+                {% endif %}
+                </div>
+                {% endfor %}
+            </div>
+    {% endfor %}
+    </div>
+        </div>
+      </div>
+
+    </div><!-- /.container -->
+{% endblock %}

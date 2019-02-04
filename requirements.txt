@@ -1,0 +1,10 @@
+mysql-connector-python
+mysqlclient
+flask
+flask-bootstrap
+flask-login
+flask-sqlalchemy
+flask-bcrypt
+flask-wtf
+giphy-client
+
