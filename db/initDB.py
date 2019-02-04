@@ -1,6 +1,12 @@
 import sqlite3
 
+# Initialize a Database to use for local Dev.
+# DB can be deleted and configured to MYSqlDb if setup on pc.
+
+
+
 sqlite_file = 'ggiphy.db'
+
 table_one = """ CREATE TABLE IF NOT EXISTS user (
                                         username TEXT PRIMARY KEY,
                                         password TEXT NOT NULL,
@@ -26,11 +32,12 @@ key_insert = """ INSERT INTO keys (name, key) VALUES ('API_KEY', 'dc6zaTOxFJmzC'
 conn = sqlite3.connect(sqlite_file)
 c = conn.cursor()
 
+# Execute the queries to stage the data for commits
 c.execute(table_one)
 c.execute(table_two)
 c.execute(table_three)
 c.execute(key_insert)
 
-
+# commit the changes to the db and then close the connection
 conn.commit()
 conn.close()
