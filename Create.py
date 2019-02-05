@@ -33,6 +33,7 @@ def create_app():
     app.config['SECRET_KEY'] = get_key(SECRET_KEY, app)
     app.config['RECAPTCHA_PUBLIC_KEY'] = get_key(RECAPTCHA_PUBLIC_KEY, app)
     app.config['RECAPTCHA_PRIVATE_KEY'] = get_key(RECAPTCHA_PRIVATE_KEY, app)
+
     return app
 
 

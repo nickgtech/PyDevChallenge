@@ -3,8 +3,8 @@ import giphy_client
 from math import ceil
 from Constants import API_KEY, SEARCH_LIMIT, RATING, LANG, JSON
 from giphy_client.rest import ApiException
-from Models import Keys, db
-from Create import get_key
+from Models import Keys
+
 
 def get_gifs(search_string, offset):
 
