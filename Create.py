@@ -1,6 +1,9 @@
 from flask import Flask
 from flask_login import LoginManager
 from Models import Keys, db
+from Constants import RECAPTCHA_PRIVATE_KEY, RECAPTCHA_PUBLIC_KEY,\
+                      SECRET_KEY, SQLALCHEMY_DATABASE_URI, SQLITE_URI
+
 
 # Get the Secret keys needed from the keys table
 def get_key(name, app):
@@ -19,17 +22,17 @@ def create_app():
     app = Flask(__name__)
 
     # Created sqlite db for easier install and run for demo.
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ggiphy.db'
+    app.config['SQLALCHEMY_DATABASE_URI'] = SQLITE_URI
 
     # init the sqlalchemy extension
     db.init_app(app)
 
     # uncomment for connection with local mysql db
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:admin@localhost:33060/ggiphy'
+    # app.config['SQLALCHEMY_DATABASE_URI'] = 'SQLALCHEMY_DATABASE_URI'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    app.config['SECRET_KEY'] = get_key('SECRET_KEY', app)
-    app.config['RECAPTCHA_PUBLIC_KEY'] = get_key('RECAPTCHA_PUBLIC_KEY', app)
-    app.config['RECAPTCHA_PRIVATE_KEY'] = get_key('RECAPTCHA_PRIVATE_KEY', app)
+    app.config['SECRET_KEY'] = get_key(SECRET_KEY, app)
+    app.config['RECAPTCHA_PUBLIC_KEY'] = get_key(RECAPTCHA_PUBLIC_KEY, app)
+    app.config['RECAPTCHA_PRIVATE_KEY'] = get_key(RECAPTCHA_PRIVATE_KEY, app)
     return app
 
 

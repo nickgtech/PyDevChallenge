@@ -5,13 +5,13 @@ from flask_login import login_user, login_required, logout_user, current_user
 from Models import User, UserGif, db
 from flask_bcrypt import Bcrypt
 import GiphyServices
-import create
+import Create
 
 # Configure the application with necessary settings
-app = create.create_app()
+app = Create.create_app()
 
 # Create the login manager
-login_manager = create.create_login_manager(app)
+login_manager = Create.create_login_manager(app)
 
 # Init Bcrypt and Bootstrap extensions
 bcrypt = Bcrypt(app)
@@ -105,18 +105,28 @@ def search():
 
 
 # handles the search results page
-@app.route('/results/<query>', methods=['POST', 'GET'])
+@app.route('/results/<query>', defaults={'offset': 0}, methods=['POST', 'GET'])
+@app.route('/reslults/<query>/<offset>', methods=['POST', 'GET'])
 @login_required
-def get_gifs(query):
+def get_gifs(query, offset):
+
+    # If offset is ever set to a negative value set offset to 0
+    if int(offset) < 0:
+        offset = 0
+
     form = SearchForm()
-    # If the search was submitted again search for other gifs.
+    # If there was a search on the results page,
+    # validate the form and query the api with the redirect.
     if form.validate_on_submit():
         query = form.search.data
         return redirect(url_for('get_gifs', query=query))
     else:
+
         # return a list of gif urls to build the results page with.
-        gif_links = GiphyServices.get_gifs(query)
-    return render_template('results.html', gif_links=gif_links, form=form)
+        gif_links, pagination = GiphyServices.get_gifs(query, offset)
+
+    return render_template('results.html', gif_links=gif_links, form=form,
+                                           offset=pagination.offset, query=query)
 
 
 # Loads the form to save a gif

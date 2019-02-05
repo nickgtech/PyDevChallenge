@@ -1,5 +1,6 @@
 {% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
+(% from Constants import LIMIT %}
 
 {% block title %}
 Results
@@ -36,6 +37,7 @@ Results
     <div class="container-fluid">
     <h1 class="text-center"> Search </h1>
       <form class="search-form" method="POST">
+            {{ form.csrf_token }}
             {{ wtf.form_field(form.search) }}
           <div class="col-lg-offset-5">
               <button class="btn btn-lg btn-primary " type="submit">Search</button>
@@ -44,6 +46,8 @@ Results
     </div>
 
     <div class="container-fluid">
+    <a href ="{{ url_for('get_gifs', query=query, offset=offset + 18) }}" > Next </a>
+    <a href ="{{ url_for('get_gifs', query=query, offset=offset - 18) }}" > Previous </a>
     {% for url_row in gif_links | batch(6, '&nbsp;') %}
         <div class="row">
             {% for url in url_row %}
@@ -64,5 +68,6 @@ Results
         </div>
     {% endfor %}
     </div>
+
 
 {% endblock %}
