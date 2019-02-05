@@ -1,0 +1,23 @@
+body {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.forms {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-spacing {
+    padding-top: 15px;
+}
+
+.search-heading {
+    margin-bottom: 0
+}
+
+.search-form {
+    max-width: 500px;
+    margin: 0 auto;
+}
