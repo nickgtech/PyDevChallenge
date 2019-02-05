@@ -17,10 +17,16 @@ login_manager = Create.create_login_manager(app)
 bcrypt = Bcrypt(app)
 Bootstrap(app)
 
+
 # returns a user object when reloading a user from the session
 @login_manager.user_loader
 def load_user(username):
     return User.query.get(username)
+
+
+@app.route('/')
+def index():
+    return redirect(url_for('login'))
 
 
 # Handles Registration of the user.
@@ -49,6 +55,10 @@ def register():
 def login():
 
     form = LoginForm(csrf_enabled=False)
+
+    # Don't show the login page if there's an active user
+    if current_user.get_id():
+       return redirect(url_for('home', user=current_user.get_id()))
 
     # Validates the LoginForm provided
     if form.validate_on_submit():
