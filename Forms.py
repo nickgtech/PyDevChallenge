@@ -55,12 +55,12 @@ class FilterForm(FlaskForm):
 
     # Simple select box for gif filtering in the profile
     category = SelectField('Show', choices=[('all', 'All'),
-                                                ('food', 'Food'),
-                                                ('funny', 'Funny'),
-                                                ('animals', 'Animals'),
-                                                ('sports', 'Sports'),
-                                                ('movies', 'Movies'),
-                                                ('fail', 'Fail'),
-                                                ('weird', 'Weird'),
-                                                ('dance', 'Dance')])
+                                                ('Food', 'Food'),
+                                                ('Funny', 'Funny'),
+                                                ('Animals', 'Animals'),
+                                                ('Sports', 'Sports'),
+                                                ('Movies', 'Movies'),
+                                                ('Fail', 'Fail'),
+                                                ('Weird', 'Weird'),
+                                                ('Dance', 'Dance')])
 
